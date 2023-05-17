@@ -63,6 +63,8 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 #define header "-LCD0-"
 
 #define boxsize 2
+int text_offset_x = 4;
+int text_offset_y = 3;
 
 typedef struct s_boxdata {
 	int iboxnum; //not actually required, array position will set
@@ -136,7 +138,7 @@ void printboxed(String msgstr, int boxnum) {
 //	delay(50);
 	mylcd.Set_Text_Size(boxsize);
 	mylcd.Set_Text_colour(YELLOW);
-	mylcd.Print_String(msgstr, sx+4, sy+3);
+	mylcd.Print_String(msgstr, sx+text_offset_x, sy+text_offset_y);
 //	Serial.println("3");
 //	delay(50);
 //	Serial.println("exit printboxed()");
