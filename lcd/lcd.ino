@@ -62,7 +62,7 @@ TouchScreen ts = TouchScreen(XP, YP, XM, YM, 300);
 
 #define header "-LCD0-"
 
-#define boxsize 2
+
 int text_offset_x = 4;
 int text_offset_y = 3;
 
@@ -88,10 +88,12 @@ int boxwidth = 300;
 int boxheight = 50;
 int boxgap = 10;
 int boxstarty = 10;
+int boxsize = 3;
 
 void setup() {
 	Serial.begin(57600); //115200 was causing corruption, slower wasn't really fast enough
 	mylcd.Set_Rotation(0);
+	Serial.println("LCD0");
 //rotating doesn't affect touch. Keep orientaion in the same direction or you'll drive yourself crazy.
 //
 //  320x480 in portrait with usb at top
@@ -105,12 +107,12 @@ void setup() {
 	//initialise boxdata
 	for (int ii = 0; ii <= boxcount; ii++) {
 		boxdata[ii].sboxdata = String(ii);
-		boxdata[ii].startx = 0;
+		boxdata[ii].startx = 1;
 		boxdata[ii].starty = boxstarty+(ii*(boxheight+boxgap));
 		boxdata[ii].endx = boxwidth;
 		boxdata[ii].endy = boxstarty+boxheight+(ii*(boxheight+boxgap));
 	}
-
+	Serial.println("setup() done");
 }
 
 void printboxed(String msgstr, int boxnum) {
@@ -144,6 +146,13 @@ void printboxed(String msgstr, int boxnum) {
 //	delay(50);
 //	Serial.println("exit printboxed()");
 //	delay(50);
+}
+
+void DisplayBoxes() {
+	Serial.println("dispbox");
+	for (int ib = 0; ib < boxcount; ib++) {
+		printboxed(boxdata[ib].sboxdata, ib);
+	}
 }
 
 
@@ -282,8 +291,9 @@ void loop() {
 	if (firsttime) {
 		//setdisp(); //only used when testing
 //		Serial.println("ft");
-//		delay(5);
+		delay(2000);
 		send_header();
+		DisplayBoxes();
 		firsttime = false;
 	}
 	if (debounce != -1) {
