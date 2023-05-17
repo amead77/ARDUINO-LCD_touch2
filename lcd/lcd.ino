@@ -67,7 +67,6 @@ int text_offset_x = 4;
 int text_offset_y = 3;
 
 typedef struct s_boxdata {
-	int iboxnum; //not actually required, array position will set
 	String sboxdata;
 	int startx;
 	int starty;
@@ -85,7 +84,10 @@ bool sendit = false;
 bool firsttime = true;
 bool refresh = false;
 int pagecount = 7;
-
+int boxwidth = 300;
+int boxheight = 50;
+int boxgap = 10;
+int boxstarty = 10;
 
 void setup() {
 	Serial.begin(57600); //115200 was causing corruption, slower wasn't really fast enough
@@ -101,15 +103,14 @@ void setup() {
 	//Serial.println(header);
 	
 	//initialise boxdata
-/*	for (int ii = 0; ii <= 7; ii++) {
-		boxdata[ii].sboxdata = "";
-		boxdata[ii].iboxnum = ii;
+	for (int ii = 0; ii <= boxcount; ii++) {
+		boxdata[ii].sboxdata = String(ii);
 		boxdata[ii].startx = 0;
-		boxdata[ii].starty = 0;
-		boxdata[ii].endx = 0;
-		boxdata[ii].endy = 0;
+		boxdata[ii].starty = boxstarty+(ii*(boxheight+boxgap));
+		boxdata[ii].endx = boxwidth;
+		boxdata[ii].endy = boxstarty+boxheight+(ii*(boxheight+boxgap));
 	}
-*/
+
 }
 
 void printboxed(String msgstr, int boxnum) {

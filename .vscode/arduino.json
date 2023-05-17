@@ -1,5 +1,5 @@
 {
     "board": "arduino:avr:uno",
     "programmer": "arduinoisp",
-    "sketch": "lcd\\lcd.ino"
+    "sketch": "lcd/lcd.ino"
 }
